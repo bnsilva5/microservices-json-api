@@ -8,9 +8,9 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<packaging>jar</packaging>
-	<artifactId>product-service</artifactId>
+	<artifactId>inventory-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>product-service</name>
+	<name>inventory-service</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -98,6 +98,32 @@
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.7.0</version>
+		</dependency>
+
+		<!-- Spring Boot Starter para la autenticación básica con API Keys -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- Dependencia para realizar peticiones HTTP (comunicación con el microservicio de productos) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId> </dependency>
+		<dependency>
+			<groupId>com.nicholassr</groupId>
+			<artifactId>product-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
 		</dependency>
 
 	</dependencies>

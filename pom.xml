@@ -11,6 +11,7 @@
 
     <modules>
         <module>product-service</module>
+        <module>inventory-service</module>
     </modules>
 
     <properties>
@@ -18,7 +19,8 @@
         <spring-boot.version>3.5.0</spring-boot.version>
 
         <lombok.version>1.18.30</lombok.version>
-        <postgresql.version>42.7.3</postgresql.version> <jsonapi-converter.version>2.16.1</jsonapi-converter.version>
+        <postgresql.version>42.7.3</postgresql.version>
+        <jsonapi-converter.version>0.14</jsonapi-converter.version>
         <springdoc-openapi.version>2.5.0</springdoc-openapi.version>
         <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
 
