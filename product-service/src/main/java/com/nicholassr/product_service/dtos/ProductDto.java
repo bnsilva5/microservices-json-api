@@ -1,5 +1,6 @@
 package com.nicholassr.product_service.dtos;
 
+import com.github.jasminb.jsonapi.annotations.Id;
 import com.github.jasminb.jsonapi.annotations.Type;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor // De Lombok: genera constructor con todos los argumentos
 @Type("products")
 public class ProductDto {
+    @Id
     private String name;
     private BigDecimal price;
 }
