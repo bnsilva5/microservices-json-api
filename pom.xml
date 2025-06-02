@@ -24,6 +24,8 @@
         <springdoc-openapi.version>2.5.0</springdoc-openapi.version>
         <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
 
+        <lombok.version>1.18.30</lombok.version>
+
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

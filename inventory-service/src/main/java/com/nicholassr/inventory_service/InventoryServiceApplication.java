@@ -6,14 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.retry.annotation.EnableRetry;
 
+
 @SpringBootApplication(exclude = {
-		SecurityAutoConfiguration.class,
-		ManagementWebSecurityAutoConfiguration.class // <<-- ¡AÑADE ESTA EXCLUSIÓN!
+        SecurityAutoConfiguration.class,
+        ManagementWebSecurityAutoConfiguration.class // <<-- ¡AÑADE ESTA EXCLUSIÓN!
 })
 @EnableRetry
 public class InventoryServiceApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(InventoryServiceApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(InventoryServiceApplication.class, args);
+    }
 }

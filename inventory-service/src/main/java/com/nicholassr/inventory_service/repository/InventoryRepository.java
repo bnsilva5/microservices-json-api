@@ -1,11 +1,11 @@
 package com.nicholassr.inventory_service.repository;
 
 import com.nicholassr.inventory_service.models.Inventory;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
-
-public interface InventoryRepository extends JpaRepository <Inventory, Long> {
+public interface InventoryRepository extends JpaRepository <Inventory, Long>{
     /**
      * Busca un registro de inventario por el ID del producto asociado.
      * Este método es crucial para la lógica de negocio, ya que el inventario
