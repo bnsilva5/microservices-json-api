@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -139,16 +140,14 @@ public class ProductController {
             @Parameter(description = "ID del producto a actualizar") @PathVariable Long id,
             @RequestBody byte[] requestBody) {
         try {
-            // Use ObjectMapper to parse the raw JSON
+            // ... (código existente para leer JSON y validar ID de ruta/payload) ...
             JsonNode rootNode = objectMapper.readTree(requestBody);
 
-            // Extract the 'id' from the request body's "data" section for validation
             JsonNode idNode = rootNode.path("data").path("id");
-            if (idNode.isMissingNode() || idNode.isNull() || !idNode.asText().equals(id.toString())) {
+            if (idNode.isMissingNode() || idNode.isNull() || !idNode.isTextual() || !idNode.asText().equals(id.toString())) {
                 throw new IllegalArgumentException("Resource ID in payload must match path ID or be present and valid.");
             }
 
-            // Extract the 'attributes' section for ProductDto mapping
             JsonNode attributesNode = rootNode.path("data").path("attributes");
             ProductDto productDto = objectMapper.treeToValue(attributesNode, ProductDto.class);
 
@@ -156,12 +155,21 @@ public class ProductController {
                 throw new IllegalArgumentException("Product data is missing from request body.");
             }
 
+            // --- ¡NUEVA LÓGICA DE VALIDACIÓN DE ATRIBUTOS AÑADIDA AQUÍ! ---
+            if (productDto.getPrice() != null && productDto.getPrice().doubleValue() < 0) { // Asume que el precio no puede ser negativo
+                throw new IllegalArgumentException("Price cannot be negative.");
+            }
+            if (productDto.getName() == null || productDto.getName().trim().isEmpty()) { // Asume que el nombre no puede ser nulo o vacío
+                throw new IllegalArgumentException("Product name cannot be empty.");
+            }
+            // --- FIN DE LA NUEVA LÓGICA DE VALIDACIÓN ---
+
             Product updatedProduct = new Product();
             updatedProduct.setName(productDto.getName());
             updatedProduct.setPrice(productDto.getPrice());
 
             Product savedProduct = productService.updateProduct(id, updatedProduct);
-            logger.info("Producto actualizado: {}", savedProduct.getId());
+            logger.info("Producto actualizado: {}", savedProduct.getId()); // Esta línea solo se alcanzará si la validación pasa
 
             byte[] response = resourceConverter.writeDocument(new JSONAPIDocument<>(savedProduct));
             return ResponseEntity.ok()
@@ -171,7 +179,10 @@ public class ProductController {
         } catch (IOException e) {
             logger.error("Error de lectura/parseo JSON al actualizar producto: {}", e.getMessage(), e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid JSON format: " + e.getMessage(), e);
-        } catch (RuntimeException e) { // Catch the RuntimeException from service if product not found
+        } catch (IllegalArgumentException e) { // Este bloque ya lo tienes y lo capturará
+            logger.error("Validacion de payload fallida: {}", e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        } catch (RuntimeException e) {
             logger.error("Error al actualizar producto (no encontrado): {}", id, e);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         } catch (DocumentSerializationException e) {
