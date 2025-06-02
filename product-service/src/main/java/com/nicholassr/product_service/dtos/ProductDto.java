@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor // De Lombok: genera constructor con todos los argumentos
 @Type("products")
 public class ProductDto {
-    @Id
+
     private String name;
     private BigDecimal price;
 }

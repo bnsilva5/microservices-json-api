@@ -1,11 +1,13 @@
 package com.nicholassr.inventory_service.services;
 
+
 import com.github.jasminb.jsonapi.annotations.Id;
 import com.github.jasminb.jsonapi.annotations.Type;
 import com.nicholassr.inventory_service.repository.InventoryRepository;
 import com.nicholassr.inventory_service.client.ProductServiceClient;
 import com.nicholassr.inventory_service.models.Inventory;
-import com.nicholassr.product_service.dtos.ProductDto;
+import com.nicholassr.inventory_service.dtos.ProductDto;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,20 +16,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Optional;
-
 
 @Service
 public class InventoryServices {
-
     private static final Logger logger = LoggerFactory.getLogger(InventoryServices.class);
-    private InventoryRepository inventoryRepository;
-    private ProductServiceClient productServiceClient;
+    private final InventoryRepository inventoryRepository;
+    private final ProductServiceClient productServiceClient;
 
-    public void InventoryService(InventoryRepository inventoryRepository, ProductServiceClient productServiceClient) {
-        this.inventoryRepository = inventoryRepository;
-        this.productServiceClient = productServiceClient;
-    }
+
 
     public InventoryServices(InventoryRepository inventoryRepository, ProductServiceClient productServiceClient) {
         this.inventoryRepository = inventoryRepository;
@@ -70,7 +68,7 @@ public class InventoryServices {
                 currentInventory.getId(),
                 productId,
                 productDto.get().getName(),
-                productDto.get().getPrice(),
+                BigDecimal.valueOf(productDto.get().getPrice()),
                 currentInventory.getQuantity()
         ));
     }
@@ -140,5 +138,4 @@ public class InventoryServices {
             this.quantityAvailable = quantityAvailable;
         }
     }
-
 }

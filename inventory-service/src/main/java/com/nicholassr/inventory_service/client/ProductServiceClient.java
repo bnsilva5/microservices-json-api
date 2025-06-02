@@ -1,13 +1,11 @@
 package com.nicholassr.inventory_service.client;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.jasminb.jsonapi.JSONAPIDocument;
 import com.github.jasminb.jsonapi.ResourceConverter;
 import com.nicholassr.inventory_service.services.InventoryServices;
-import com.nicholassr.product_service.dtos.ProductDto; // Asegúrate de que este import sea correcto
+import com.nicholassr.inventory_service.dtos.ProductDto; // Asegúrate de que este import sea correcto
 
-import com.nicholassr.product_service.models.Product;
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
@@ -177,4 +175,5 @@ public class ProductServiceClient {
             super(message);
         }
     }
+
 }
