@@ -59,3 +59,10 @@ http://localhost:8083/swagger-ui/index.html
 
 - **GET** /api/v1/inventories/products/5
 - **PATCH** /api/v1/inventories/products/5
+
+## Instalacion y ejecucion
+- Java 17 y Maven
+- PostgreSql
+- Intellij / Eclipse (O algun editor para java - spring)
+- Clonar el repositorio rama master, abrir en el editor de codigo e instalar las dependencias en los dos microservicios, ejecutar/correr el archivo de aplicacion de los dos servicios.
+- Probar endpoinst con postman.
